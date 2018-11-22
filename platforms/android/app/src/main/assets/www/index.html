@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>Peça Preço</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="css/index.css"/>
+    </head>
+    <body>
+        <div class="app">
+            <div id="ui">
+                <nav>
+                    <image src="img/logo.png" id="indexLogo" height="35px"/>
+
+                    <span class="menu-hamburger">
+                        <span class="menu-hamburger-line">-</span>
+                        <span class="menu-hamburger-line">-</span>
+                        <span class="menu-hamburger-line">-</span>
+                    </span>
+                </nav>
+
+                <section id="buttons">
+                    <button id="searchPairedDeviceButton" class="commonButton">Dispositivos Empareados</button>
+                    <button id="searchUnpairedDeviceButton" class="commonButton">Buscar Dispositivo</button>
+                </section>
+                
+                <section id="connectedDevice">
+                    <div>
+                        <p id="connectedDeviceInfo"></p>
+                    </div>
+                    <div id="divDisconnectDevice">
+                        <button id="disconnectDevice">Desconectar</button>
+                    </div>
+                </section>
+                
+                <section id="containerList">
+                    <section id="pairedDevicesSection">
+                        <div id="pairedDevicesList"></div>
+                    </section>
+                    
+                    <section id="loadingSection">
+                        <div id="loadingUnpaired" class="loader"></div>
+                        <p id="searchingText">Buscando...</p>
+                    </section>
+                    
+                    <section id="unpairedDevicesSection">
+                        <div id="unpairedDevicesList"></div>
+                    </section>
+                </section>
+                
+                <section id="nightlyMode">
+                    <section id="nithlyModeButtons">
+                        <button id="debugButton">Console Log</button>
+                    </section>
+                    
+                    <div id="cmdLog"></div>
+                </section>
+            </div>
+        </div>
+        <script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" src="js/jquery.js"></script>
+        <script type="text/javascript" src="js/nightlyMode.js"></script>
+        <script type="text/javascript" src="js/interfaceManager.js"></script>
+        <script type="text/javascript" src="js/dataManager.js"></script>
+        <script type="text/javascript" src="js/httpManager.js"></script>
+        <script type="text/javascript" src="js/JSONTemplate.js"></script>
+        <script type="text/javascript" src="js/obdManager.js"></script>
+    </body>
+</html>
