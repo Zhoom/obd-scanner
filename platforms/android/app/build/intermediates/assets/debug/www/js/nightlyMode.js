@@ -238,48 +238,8 @@ var app = {
             // bluetoothSerial.subscribe - On Success
             function(data) {
                 var code = dataManager.transformOBDdata(data);
-
-                // Criação do arquivo JSON que será
-                JSONTemplate["MAC Address"] = app.macAddress;
-                JSONTemplate["Date"] = Date.now;
-
-                if ((code.charAt(0) == 4 && code.charAt(1) == 1)){
-                    if((code.charAt(2) == 0 && code.charAt(3) == 4)){
-                        var result = obdManager.getCalculatedEngineLoad(code.charAt(4) + '' + code.charAt(5));
-                        //interfaceManager.appendMessageToElementId("> Calculated engine load: " + result + "%");
-                        JSONTemplate["Calculated Engine Load (%)"] = result;
-                    }
-                    if((code.charAt(2) == 0 && code.charAt(3) == 5)){
-                        var result = obdManager.getEngineCoolantTemperature(code.charAt(4) + '' + code.charAt(5));
-                        //interfaceManager.appendMessageToElementId("> Engine coolant temperature: " + result + "°C");
-                        JSONTemplate["Engine Coolant Temperature (°C)"] = result;
-                    }
-                    if((code.charAt(2) == 0 && code.charAt(3) == 6)){
-                        var result = obdManager.getFuelTrim(code.charAt(4) + '' + code.charAt(5));
-                        //interfaceManager.appendMessageToElementId("> Short term fuel trim—Bank 1: " + result + "%");
-                        JSONTemplate["Fuel Trim"]["Bank 1"]["Short Term (%)"] = result;
-                    }
-                    if((code.charAt(2) == 0 && code.charAt(3) == 7)){
-                        var result = obdManager.getFuelTrim(code.charAt(4) + '' + code.charAt(5));
-                        //interfaceManager.appendMessageToElementId("> Long term fuel trim—Bank 1: " + result + "%");
-                        JSONTemplate["Fuel Trim"]["Bank 1"]["Long Term (%)"] = result;
-                    }
-                    if((code.charAt(2) == 0 && code.charAt(3) == 'B')){
-                        var result = obdManager.getIntakeManifoldAbsolutePressure(code.charAt(4) + '' + code.charAt(5));
-                        //interfaceManager.appendMessageToElementId("> Intake manifold absolute pressure: " + result + "kPa");
-                        JSONTemplate["Intake Manifold Absolute Pressure (kPm)"] = result;
-                    }
-                    if((code.charAt(2) == 0 && code.charAt(3) == 'C')){
-                        var result = obdManager.getRPM(code.charAt(4) + '' + code.charAt(5));
-                        //interfaceManager.appendMessageToElementId("> Engine RPM: " + result + "rpm");
-                        JSONTemplate["Engine RPM (rpm)"] = result;
-                    }
-                    if((code.charAt(2) == 0 && code.charAt(3) == 'D')){
-                        var result = obdManager.getVehicleSpeed(code.charAt(4) + '' + code.charAt(5));
-                        //interfaceManager.appendMessageToElementId("> Vehicle speed: " + result + "km/h");
-                        JSONTemplate["Vehicle speed (km/h)"] = result;
-                    }
-                }
+                interfaceManager.appendMessageToElementId("> " + JSON.stringify(data), "cmdLog");
+                obdManager.convertCodesAndInsertInJSON(code);
             },
 
             // bluetoothSerial.subscribe - On Failure
@@ -329,35 +289,43 @@ var app = {
       
     sendOBDMessages: async function() {
         app.writeMessage("0104");
-        await app.sleep(300);
+        await app.sleep(250);
         app.writeMessage("0105");
-        await app.sleep(300);
+        await app.sleep(250);
         app.writeMessage("0106");
-        await app.sleep(300);
+        await app.sleep(250);
         app.writeMessage("0107");
-        await app.sleep(300);
+        await app.sleep(250);
+        app.writeMessage("0108");
+        await app.sleep(250);
+        app.writeMessage("0109");
+        await app.sleep(250);
+        app.writeMessage("010A");
+        await app.sleep(250);
         app.writeMessage("010B");
-        await app.sleep(300);
+        await app.sleep(250);
         app.writeMessage("010C");
-        await app.sleep(300);
+        await app.sleep(250);
         app.writeMessage("010D");
-        await app.sleep(300);
+        await app.sleep(250);
         app.writeMessage("010E");
-        await app.sleep(300);
+        await app.sleep(250);
         app.writeMessage("010F");
-        await app.sleep(300);
+        await app.sleep(250);
+        app.writeMessage("0110");
+        await app.sleep(250);
         app.writeMessage("0111");
-        await app.sleep(300);
+        await app.sleep(250);
         app.writeMessage("011C");
-        await app.sleep(300);
+        await app.sleep(250);
         app.writeMessage("011F");
-        await app.sleep(300);
+        await app.sleep(250);
         interfaceManager.appendMessageToElementId("> Requisições enviadas...", "cmdLog");
-        //3600ms
+        //4000ms
 
-        await app.sleep(3000);
+        await app.sleep(2500);
         httpManager.postHttp(app.apiURL, JSONTemplate);
-        //6600ms
+        //6500ms
     },
 
     requestManager: function(sendRequest){
@@ -368,7 +336,7 @@ var app = {
                 app.interval = setInterval(
                     function() {
                         app.sendOBDMessages();
-                    }, 8000);
+                    }, 10000);
             }
         }
         

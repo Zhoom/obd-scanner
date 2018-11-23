@@ -100,4 +100,49 @@ var obdManager = {
     getRunTimeSinceEngineStart: function(byteA, byteB){
         return ((parseInt(byteA, 16) * 256) + parseInt(byteB, 16))
     },
+
+    convertCodesAndInsertInJSON: function(code){
+
+        // Criação do arquivo JSON que será
+        JSONTemplate["MAC Address"] = app.macAddress;
+        JSONTemplate["Date"] = Date.now;
+
+        if(code.charAt(0) == 4 && code.charAt(1) == 1){
+            if(code.charAt(2) == 0 && code.charAt(3) == 4)
+                JSONTemplate["Calculated Engine Load (%)"] = obdManager.getCalculatedEngineLoad(code.charAt(4) + '' + code.charAt(5));
+
+            if(code.charAt(2) == 0 && code.charAt(3) == 5)
+                JSONTemplate["Engine Coolant Temperature (°C)"] = obdManager.getEngineCoolantTemperature(code.charAt(4) + '' + code.charAt(5));
+
+            if(code.charAt(2) == 0 && code.charAt(3) == 6)
+                JSONTemplate["Fuel Trim"]["Bank 1"]["Short Term (%)"] = obdManager.getFuelTrim(code.charAt(4) + '' + code.charAt(5));
+
+            if(code.charAt(2) == 0 && code.charAt(3) == 7)
+                JSONTemplate["Fuel Trim"]["Bank 1"]["Long Term (%)"] = obdManager.getFuelTrim(code.charAt(4) + '' + code.charAt(5));
+            
+            if(code.charAt(2) == 0 && code.charAt(3) == 8)
+                JSONTemplate["Fuel Trim"]["Bank 2"]["Short Term (%)"] = obdManager.getFuelTrim(code.charAt(4) + '' + code.charAt(5));
+
+            if(code.charAt(2) == 0 && code.charAt(3) == 9)
+                JSONTemplate["Fuel Trim"]["Bank 2"]["Long Term (%)"] = obdManager.getFuelTrim(code.charAt(4) + '' + code.charAt(5));
+                
+            if(code.charAt(2) == 0 && code.charAt(3) == 'A')
+                JSONTemplate["Fuel Pressure (kPa)"] = obdManager.getFuelPressure(code.charAt(4) + '' + code.charAt(5));
+            
+            if(code.charAt(2) == 0 && code.charAt(3) == 'B')
+                JSONTemplate["Intake Manifold Absolute Pressure (kPa)"] = obdManager.getIntakeManifoldAbsolutePressure(code.charAt(4) + '' + code.charAt(5));
+
+            if(code.charAt(2) == 0 && code.charAt(3) == 'C')
+                JSONTemplate["Engine RPM (rpm)"] = obdManager.getRPM(code.charAt(4) + '' + code.charAt(5), code.charAt(6) + '' + code.charAt(7));
+
+            if(code.charAt(2) == 0 && code.charAt(3) == 'D')
+                JSONTemplate["Vehicle speed (km/h)"] = obdManager.getVehicleSpeed(code.charAt(4) + '' + code.charAt(5));
+
+            if(code.charAt(2) == 0 && code.charAt(3) == 'E')
+                JSONTemplate["Timing advance (°)"] = obdManager.getTimingAdvance(code.charAt(4) + '' + code.charAt(5));
+            
+        } else {
+            interfaceManager.appendMessageToElementId("> O OBD não deu uma resposta válida", "cmdLog");
+        }
+    }
 }

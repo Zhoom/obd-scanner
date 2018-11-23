@@ -5,12 +5,18 @@ var JSONTemplate = {
     "Fuel Trim" : {
         "Bank 1" : {
             "Short Term (%)" : Number,
-            "Long Term (%)" : Number,
+            "Long Term (%)" : Number
+        },
+        "Bank 2" : {
+            "Short Term (%)" : Number,
+            "Long Term (%)" : Number
         }
     },
-    "Intake Manifold Absolute Pressure (kPm)" : Number,
+    "Fuel Pressure (kPa)" : Number,
+    "Intake Manifold Absolute Pressure (kPa)" : Number,
     "Engine RPM (rpm)" : Number,
     "Vehicle speed (km/h)" : Number,
+    "Timing advance (°)" : Number,
     "Date" : Date
 }
 
@@ -21,11 +27,17 @@ var cleanJSON = {
     "Fuel Trim" : {
         "Bank 1" : {
             "Short Term (%)" : Number,
-            "Long Term (%)" : Number,
+            "Long Term (%)" : Number
+        },
+        "Bank 2" : {
+            "Short Term (%)" : Number,
+            "Long Term (%)" : Number
         }
     },
-    "Intake Manifold Absolute Pressure (kPm)" : Number,
+    "Fuel Pressure (kPa)" : Number,
+    "Intake Manifold Absolute Pressure (kPa)" : Number,
     "Engine RPM (rpm)" : Number,
     "Vehicle speed (km/h)" : Number,
+    "Timing advance (°)" : Number,
     "Date" : Date
 }
