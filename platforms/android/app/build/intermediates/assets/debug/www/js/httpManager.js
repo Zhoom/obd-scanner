@@ -17,12 +17,13 @@ var httpManager = {
         });
     },
 
-    getHttp: function(){
+    getHttp: function(url){
         interfaceManager.appendMessageToElementId("> Enviando requisição GET...", "cmdLog");
 
         cordova.plugin.http.get(url, {}, {}, function(response){
             interfaceManager.appendMessageToElementId("> Servidor " + response.url + "respondeu com a mensagem " + response.status, "cmdLog");
             interfaceManager.appendMessageToElementId("> Conteúdo recebido: " + response.data, "cmdLog");
+            return response.data;
         }, function(response){
             interfaceManager.appendMessageToElementId("> Servidor " + response.url + "respondeu com a mensagem " + response.status, "cmdLog");
             interfaceManager.appendMessageToElementId("> Conteúdo recebido: " + response.error, "cmdLog");

@@ -36,7 +36,9 @@ var app = {
             interfaceManager.appendMessageToElementId("> Não está verificando por certificados SSL", "cmdLog");
           }, function() {
             interfaceManager.appendMessageToElementId("> Error ao definir certificado SSL", "cmdLog");
-          });
+        });
+
+        
 
         interfaceManager.appendMessageToElementId("> Sistema iniciado", "cmdLog");
     },

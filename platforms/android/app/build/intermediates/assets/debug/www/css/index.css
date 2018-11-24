@@ -144,9 +144,36 @@ footer{
     outline: none;
 }
 
+#mapSection{
+    position:fixed;
+    left:0px;
+    right:0px;
+    bottom:35px;
+    top:60px;
+}
+
+#map {
+    position:relative;
+    height: 100%;
+    width: 100%;
+}
+
+#buttons{
+    display:none;
+}
+
+#connectedDevice{
+    position:fixed;
+    left:0px;
+    right:0px;
+    text-align:center;
+    top:120px;
+    display:none;
+}
+
 #containerList{
     text-align: center;
-    display:block;
+    display:none;
     height:auto;
     overflow: scroll;
     position:fixed;
@@ -211,15 +238,6 @@ footer{
 #unpairedDevicesList p{
     border-bottom: 1px solid #BFBFBF;
     padding-bottom:10px;
-}
-
-#connectedDevice{
-    position:fixed;
-    left:0px;
-    right:0px;
-    text-align:center;
-    top:120px;
-    display:none;
 }
 
 #connectedDevice p{

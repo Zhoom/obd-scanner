@@ -226,6 +226,20 @@ module.exports = [
     "clobbers": [
       "window.bluetoothSerial"
     ]
+  },
+  {
+    "id": "cordova-plugin-geolocation.geolocation",
+    "file": "plugins/cordova-plugin-geolocation/www/android/geolocation.js",
+    "pluginId": "cordova-plugin-geolocation",
+    "clobbers": [
+      "navigator.geolocation"
+    ]
+  },
+  {
+    "id": "cordova-plugin-geolocation.PositionError",
+    "file": "plugins/cordova-plugin-geolocation/www/PositionError.js",
+    "pluginId": "cordova-plugin-geolocation",
+    "runs": true
   }
 ];
 module.exports.metadata = 
@@ -235,7 +249,8 @@ module.exports.metadata =
   "cordova-plugin-statusbar": "2.4.2",
   "cordova-plugin-file": "6.0.1",
   "cordova-plugin-advanced-http": "2.0.1",
-  "cordova-plugin-bluetooth-serial": "0.4.7"
+  "cordova-plugin-bluetooth-serial": "0.4.7",
+  "cordova-plugin-geolocation": "4.0.1"
 };
 // BOTTOM OF METADATA
 });
