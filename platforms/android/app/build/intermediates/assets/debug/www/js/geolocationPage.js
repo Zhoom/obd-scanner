@@ -17,7 +17,7 @@ var geolocation = {
     },
 
     setUserCurrentPositions: function(){
-        interfaceManager.appendMessageToElementId("> aa", "cmdLog");
+        document.getElementById("map").setAttribute("src", "");
 
         var onSuccess = function(location){
             document.getElementById("map").setAttribute("src", geolocation.URL + location.coords.latitude + "," + location.coords.longitude);

@@ -27,7 +27,7 @@
     <preference name="AndroidPersistentFileLocation" value="Compatibility" />
     <plugin name="cordova-plugin-advanced-http" spec="^2.0.1" />
     <plugin name="cordova-plugin-bluetooth-serial" spec="^0.4.7" />
-    <icon density="mdpi" height="57" platform="android" src="res/icon/android/icon-pecapreco.png" width="57" />
+    <icon density="mdpi" height="57" platform="android" src="res/icon/android/mipmap-xhdpi/ic_launcher.png" width="57" />
     <plugin name="cordova-plugin-geolocation" spec="^4.0.1" />
     <engine name="android" spec="^7.1.2" />
 </widget>

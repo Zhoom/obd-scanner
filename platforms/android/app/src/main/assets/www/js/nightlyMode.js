@@ -38,9 +38,8 @@ var app = {
             interfaceManager.appendMessageToElementId("> Error ao definir certificado SSL", "cmdLog");
         });
 
-        
-
         interfaceManager.appendMessageToElementId("> Sistema iniciado", "cmdLog");
+        app.findPairedDevice();
     },
 
     connectionError: function(){
@@ -119,6 +118,7 @@ var app = {
     findUnpairedDevice: function(){
         interfaceManager.clearList("unpairedDevicesList");
         interfaceManager.swapVisibilityById("pairedDevicesSection", "loadingSection");
+        interfaceManager.changeTab("searchUnpairedDeviceButton", "searchPairedDeviceButton");
         interfaceManager.appendMessageToElementId("> Tentando encontrar por dispositivos não pareados...", "cmdLog");
 
         //  bluetoothSerial.isEnabled - On Success
@@ -133,13 +133,11 @@ var app = {
 
                     if(results.length <= 0){
                         interfaceManager.appendMessageToElementId("> Nada encontrado.", "cmdLog");
-
+                        interfaceManager.appendMessageToElementId("Nada encontrado", "unpairedDevicesList");
                     } else {
-                        
+                        interfaceManager.appendMessageToElementId("> Dispositivo encontrado.", "cmdLog");
                         // Cria um botão para cada dispositivo para poder estabelecer uma conexão
                         results.forEach(element => {
-                            interfaceManager.appendMessageToElementId("> Dispositivo encontrado.", "cmdLog");
-        
                             interfaceManager.appendMessageWithOnClickToElementId(
                                 "Dispositivo: " + element.name + " (" + element.address + ")",
                                 "unpairedDevicesList",
@@ -187,6 +185,8 @@ var app = {
     findPairedDevice: function(){
         interfaceManager.clearList("pairedDevicesList");
         interfaceManager.swapVisibilityById("unpairedDevicesSection", "loadingSection");
+        interfaceManager.changeTab("searchPairedDeviceButton", "searchUnpairedDeviceButton");
+        
         interfaceManager.appendMessageToElementId("> Tentando encontrar por dispositivos pareados...", "cmdLog");
 
         // Busca por dispositivos pareados
@@ -197,14 +197,12 @@ var app = {
                 interfaceManager.swapVisibilityById("loadingSection", "pairedDevicesSection");
 
                 if(results.length <= 0){
-                    interfaceManager.appendMessageToElementId("> Nada encontrado.", "cmdLog");
-
+                    interfaceManager.appendMessageToElementId("> Nenhum dispositivo pareado", "cmdLog");
+                    interfaceManager.appendMessageToElementId("Nada encontrado", "pairedDevicesList");
                 } else {
-
+                    interfaceManager.appendMessageToElementId("> Dispositivo encontrado.", "cmdLog");
                     // Cria um botão para cada dispositivo para poder estabelecer uma conexão
                     results.forEach(element => {
-                        interfaceManager.appendMessageToElementId("> Dispositivo encontrado.", "cmdLog");
-    
                         interfaceManager.appendMessageWithOnClickToElementId(
                             "Dispositivo: " + element.name + " (" + element.address + ")",
                             "pairedDevicesList",

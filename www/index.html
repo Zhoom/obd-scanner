@@ -13,45 +13,59 @@
                 <nav>
                     <image src="img/logo.png" id="indexLogo" height="35px"/>
 
-                    <span class="menu-hamburger">
-                        <span class="menu-hamburger-line">-</span>
-                        <span class="menu-hamburger-line">-</span>
-                        <span class="menu-hamburger-line">-</span>
-                    </span>
+                    <section id="menuButton">
+                        <span class="menu-hamburger">
+                            <span class="menu-hamburger-line">-</span>
+                            <span class="menu-hamburger-line">-</span>
+                            <span class="menu-hamburger-line">-</span>
+                        </span>
+                    </section>
                 </nav>
+                
+                <section id="dropMenu">
+                    <button id="conectivityButton" class="dropMenuOptions"><img src="img/drawable-xhdpi/ic_settings_remote.png" height="22px" width="22px" class="menuIcon"><span>Conectividade</span></button>
+                    <button id="carInfoButton" class="dropMenuOptions"><img src="img/drawable-xhdpi/ic_assessment.png" height="22px" width="22px" class="menuIcon"><span>Informações do carro</span></button>
+                    <button id="carProblemsButton" class="dropMenuOptions"><img src="img/drawable-xhdpi/ic_announcement.png" height="22px" width="22px" class="menuIcon" style="top:4px;"><span>Problemas encontrados</span></button>
+                    <button id="storesButton" class="dropMenuOptions"><img src="img/drawable-xhdpi/ic_build.png" height="22px" width="22px" class="menuIcon"><span>Lojas/Oficinas próximas</span></button>
+                    <button id="carLogButton"  class="dropMenuOptions"><img src="img/drawable-xhdpi/ic_assignment.png" height="22px" width="22px" class="menuIcon"><span>Log de dados coletados</span></button>
+                </section>
                 
                 <section id="mapSection">
                     <iframe id="map" src=""></iframe>
                 </section>
                 
-                <section id="buttons">
-                    <button id="searchPairedDeviceButton" class="commonButton">Dispositivos Empareados</button>
-                    <button id="searchUnpairedDeviceButton" class="commonButton">Buscar Dispositivo</button>
+                <section id="connectivitySection">
+                    <section id="buttons">
+                        <button id="searchPairedDeviceButton" class="commonButton">Dispositivos Empareados</button>
+                        <button id="searchUnpairedDeviceButton" class="commonButton">Buscar Dispositivo</button>
+                    </section>
+
+                    <section id="connectedDevice">
+                        <div>
+                            <p id="connectedDeviceInfo"></p>
+                        </div>
+                        <div id="divDisconnectDevice">
+                            <button id="disconnectDevice">Desconectar</button>
+                        </div>
+                    </section>
+
+                    <section id="containerList">
+                        <section id="pairedDevicesSection">
+                            <div id="pairedDevicesList">
+                            </div>
+                        </section>
+
+                        <section id="loadingSection">
+                            <div id="loadingUnpaired" class="loader"></div>
+                            <p id="searchingText">Buscando...</p>
+                        </section>
+
+                        <section id="unpairedDevicesSection">
+                            <div id="unpairedDevicesList"></div>
+                        </section>
+                    </section>
                 </section>
                 
-                <section id="connectedDevice">
-                    <div>
-                        <p id="connectedDeviceInfo"></p>
-                    </div>
-                    <div id="divDisconnectDevice">
-                        <button id="disconnectDevice">Desconectar</button>
-                    </div>
-                </section>
-                
-                <section id="containerList">
-                    <section id="pairedDevicesSection">
-                        <div id="pairedDevicesList"></div>
-                    </section>
-                    
-                    <section id="loadingSection">
-                        <div id="loadingUnpaired" class="loader"></div>
-                        <p id="searchingText">Buscando...</p>
-                    </section>
-                    
-                    <section id="unpairedDevicesSection">
-                        <div id="unpairedDevicesList"></div>
-                    </section>
-                </section>
                 
                 <section id="nightlyMode">
                     <section id="nithlyModeButtons">

@@ -142,7 +142,7 @@ var obdManager = {
                 JSONTemplate["Timing advance (°)"] = obdManager.getTimingAdvance(code.charAt(4) + '' + code.charAt(5));
             
         } else {
-            interfaceManager.appendMessageToElementId("> O OBD não deu uma resposta válida", "cmdLog");
+            //interfaceManager.appendMessageToElementId("> O OBD não deu uma resposta válida", "cmdLog");
         }
     }
 }
