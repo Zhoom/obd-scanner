@@ -21,11 +21,10 @@
     },
     "cordova-plugin-geolocation": {
       "PACKAGE_NAME": "br.com.pecapreco"
-    }
-  },
-  "dependent_plugins": {
+    },
     "cordova-plugin-file": {
       "PACKAGE_NAME": "br.com.pecapreco"
     }
-  }
+  },
+  "dependent_plugins": {}
 }

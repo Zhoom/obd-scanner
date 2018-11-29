@@ -1,40 +1,45 @@
 
 /* Gerência o dispositivo */
 var app = {
-    macAddress : "",
-    deviceName : "",
-    apiURL : "http://192.168.0.200:3000/obd/data/",
+    macAddress: "",
+    deviceName: "",
+    apiURL: "http://192.168.0.200:3000/obd/data/",
 
     /*
         Construtor da aplicação.
     */
-    initialize: function() {
+    initialize: function () {
         this.bindEvents();
     },
 
     /*
         Associa os botões da interface com a funções criadas.
     */
-    bindEvents: function() {
+    bindEvents: function () {
         document.addEventListener('deviceready', app.onDeviceReady, false);
         searchPairedDeviceButton.addEventListener('touchend', app.findPairedDevice, false);
         searchUnpairedDeviceButton.addEventListener('touchend', app.findUnpairedDevice, false);
-        disconnectDevice.addEventListener('touchend', app.manageConnection(app.deviceName. app.macAddress), false);
+        disconnectDevice.addEventListener('touchend', app.manageConnection(app.deviceName.app.macAddress), false);
+        document.addEventListener('onunload', app.alertTest, false);
+    },
+
+    alertTest: function () {
+        httpManager.getHttp("http://192.168.0.200:3000/test");
     },
 
     /*
         Esta função é automaticamente executada quando o aplicativo está pronto para ser usado
         É aqui que deve ficar tudo que for pos-processamento para ser chamado na tela inicial do aplicativo.
     */
-    onDeviceReady: function() {
+    onDeviceReady: function () {
         if (cordova.platformId == 'android') {
             StatusBar.backgroundColorByHexString("#000000");
         }
 
         cordova.plugin.http.setDataSerializer('json');
-        cordova.plugin.http.setSSLCertMode('nocheck', function() {
+        cordova.plugin.http.setSSLCertMode('nocheck', function () {
             interfaceManager.appendMessageToElementId("> Não está verificando por certificados SSL", "cmdLog");
-          }, function() {
+        }, function () {
             interfaceManager.appendMessageToElementId("> Error ao definir certificado SSL", "cmdLog");
         });
 
@@ -42,22 +47,22 @@ var app = {
         app.findPairedDevice();
     },
 
-    connectionError: function(){
+    connectionError: function () {
         interfaceManager.appendMessageToElementId("> Erro de conexão (Você foi desconectado)", "cmdLog");
         app.endConnection();
     },
 
-    endConnection: function(){
+    endConnection: function () {
         app.stopSendingRequests();
         interfaceManager.hideElementById("connectedDevice");
         document.getElementById("containerList").style.top = "122px";
     },
 
-    finishConnection: function(){
+    finishConnection: function () {
         interfaceManager.appendMessageToElementId("> Desconectando...", "cmdLog");
 
-        var success = function(){
-                interfaceManager.appendMessageToElementId("> Desconectado de " + app.macAddress, "cmdLog");
+        var success = function () {
+            interfaceManager.appendMessageToElementId("> Desconectado de " + app.macAddress, "cmdLog");
         }
         // Tenta abrir uma conexão com o dispositivo especificado
         app.endConnection();
@@ -67,18 +72,18 @@ var app = {
     /*
         Estabelece uma conexão Bluetooth com o endereço MAC especificado.
     */
-    manageConnection: function(dName, dMac){
+    manageConnection: function (dName, dMac) {
         app.macAddress = dMac;
         app.deviceName = dName;
 
         // bluetoothSerial.isEnabled - On Success
-        var bTrue = function(){
+        var bTrue = function () {
 
-            var connected = function(){
+            var connected = function () {
                 app.finishConnection();
             }
 
-            var disconnected = function(){
+            var disconnected = function () {
                 interfaceManager.appendMessageToElementId("> Conectando...", "cmdLog");
 
                 // Tenta abrir uma conexão com o dispositivo especificado
@@ -86,22 +91,22 @@ var app = {
             }
 
             bluetoothSerial.isConnected(connected, disconnected);
-            
+
         }
-        
+
         // bluetoothSerial.isEnabled - On Failure
-        var bFalse = function(){
+        var bFalse = function () {
             interfaceManager.appendMessageToElementId("> Habilitando Bluetooth...", "cmdLog");
             bluetoothSerial.enable(
 
                 // bluetoothSerial.enable - On Success
-                function(){
+                function () {
                     interfaceManager.appendMessageToElementId("> O Bluetooth foi ativado.", "cmdLog");
                     app.findUnpairedDevice();
                 },
-                
+
                 // bluetoothSerial.enable - On Failure
-                function(){
+                function () {
                     interfaceManager.appendMessageToElementId("> Permissão para ativar o Bluetooth foi negada.", "cmdLog");
                 }
             );
@@ -111,27 +116,27 @@ var app = {
         // Para caso o bluetooth tenha sido desativado depois de ter feita a listagem.
         bluetoothSerial.isEnabled(bTrue, bFalse);
     },
-    
+
     /*
         Busca por dispositivos não pareados
     */
-    findUnpairedDevice: function(){
+    findUnpairedDevice: function () {
         interfaceManager.clearList("unpairedDevicesList");
         interfaceManager.swapVisibilityById("pairedDevicesSection", "loadingSection");
         interfaceManager.changeTab("searchUnpairedDeviceButton", "searchPairedDeviceButton");
         interfaceManager.appendMessageToElementId("> Tentando encontrar por dispositivos não pareados...", "cmdLog");
 
         //  bluetoothSerial.isEnabled - On Success
-        var bTrue = function(){
+        var bTrue = function () {
 
             // Busca por dispositivos próximos
             bluetoothSerial.discoverUnpaired(
 
                 // bluetoothSerial.discoverUnpaired - On Success
-                function(results) {
+                function (results) {
                     interfaceManager.swapVisibilityById("loadingSection", "unpairedDevicesSection");
 
-                    if(results.length <= 0){
+                    if (results.length <= 0) {
                         interfaceManager.appendMessageToElementId("> Nada encontrado.", "cmdLog");
                         interfaceManager.appendMessageToElementId("Nada encontrado", "unpairedDevicesList");
                     } else {
@@ -144,36 +149,36 @@ var app = {
                                 "app.manageConnection('" + element.name + "', '" + element.address + "')"
                             );
                         });
-                    }   
+                    }
 
                 },
 
                 // bluetoothSerial.discoverUnpaired - On Failure
-                function(error) {
+                function (error) {
                     interfaceManager.appendMessageToElementId("> Falha ao buscar por dispositivos não pareados", "cmdLog");
                 }
             );
         }
 
         //  bluetoothSerial.isEnabled - On Failure
-        var bFalse = function(){
+        var bFalse = function () {
             interfaceManager.appendMessageToElementId("> Habilitando Bluetooth...", "cmdLog");
 
             // Pede permissão para ativar o bluetooth
             bluetoothSerial.enable(
 
                 // bluetoothSerial.enable - On Success
-                function(){
+                function () {
                     interfaceManager.appendMessageToElementId("> O Bluetooth foi ativado.", "cmdLog");
                     app.findUnpairedDevice();
                 },
                 // bluetoothSerial.enable - On Failure
-                function(){
+                function () {
                     interfaceManager.appendMessageToElementId("> Permissão para ativar o Bluetooth foi negada.", "cmdLog");
                 }
             );
         }
-        
+
         // Verifica se o bluetooth está ativado
         bluetoothSerial.isEnabled(bTrue, bFalse);
     },
@@ -182,21 +187,21 @@ var app = {
     /*
         Busca por dispositivos que estão pareados
     */
-    findPairedDevice: function(){
+    findPairedDevice: function () {
         interfaceManager.clearList("pairedDevicesList");
         interfaceManager.swapVisibilityById("unpairedDevicesSection", "loadingSection");
         interfaceManager.changeTab("searchPairedDeviceButton", "searchUnpairedDeviceButton");
-        
+
         interfaceManager.appendMessageToElementId("> Tentando encontrar por dispositivos pareados...", "cmdLog");
 
         // Busca por dispositivos pareados
         bluetoothSerial.list(
 
             // bluetoothSerial.list - On Success
-            function(results) {
+            function (results) {
                 interfaceManager.swapVisibilityById("loadingSection", "pairedDevicesSection");
 
-                if(results.length <= 0){
+                if (results.length <= 0) {
                     interfaceManager.appendMessageToElementId("> Nenhum dispositivo pareado", "cmdLog");
                     interfaceManager.appendMessageToElementId("Nada encontrado", "pairedDevicesList");
                 } else {
@@ -209,12 +214,12 @@ var app = {
                             "app.manageConnection('" + element.name + "' , '" + element.address + "')"
                         );
                     });
-                }   
+                }
 
             },
 
             // bluetoothSerial.list - On Failure
-            function(error) {
+            function (error) {
                 interfaceManager.appendMessageToElementId("> Falha ao buscar por dispositivos pareados", "cmdLog");
             }
         );
@@ -224,26 +229,25 @@ var app = {
     /*
         Gerência interações de envio e recebimento de mensagems com o outro dispositivo
     */
-    deviceInteraction: function(){
+    deviceInteraction: function () {
         interfaceManager.appendMessageToElementId("> Conectado a " + app.macAddress, "cmdLog");
 
         interfaceManager.changeElementIdTextContent("connectedDeviceInfo", "Dispositivo: " + app.deviceName + " (" + app.macAddress + ")");
         document.getElementById("containerList").style.top = "212px";
         interfaceManager.showElementById("connectedDevice");
-        
+
         app.sendRequests();
 
         // Cria uma escuta no canal Bluetooth para ficar recebendo as mensagems
         bluetoothSerial.subscribe("\r",
             // bluetoothSerial.subscribe - On Success
-            function(data) {
+            function (data) {
                 var code = dataManager.transformOBDdata(data);
-                interfaceManager.appendMessageToElementId("> " + JSON.stringify(data), "cmdLog");
                 obdManager.convertCodesAndInsertInJSON(code);
             },
 
             // bluetoothSerial.subscribe - On Failure
-            function(error) {
+            function (error) {
                 interfaceManager.appendMessageToElementId("> Erro em ao estabelercer uma conexão para recebimento dos dados." + error, "cmdLog");
             }
         );
@@ -252,28 +256,30 @@ var app = {
     /*
         Envia uma mensagem para o dispositivo ao qual está conectado no momento.
     */
-    writeMessage: function(message){
-        bluetoothSerial.write(message + "\r\n", function(){
-
+    writeMessage: function (message) {
+        bluetoothSerial.write(message + "\r\n",
             // bluetoothSerial.write - On Success
-            interfaceManager.appendMessageToElementId("> Mensagem '" + message + "' foi enviada", "cmdLog");
+            function () {
+                //interfaceManager.appendMessageToElementId("> Mensagem '" + message + "' foi enviada", "cmdLog");
 
-            // bluetoothSerial.write - On Failure
-        }, function(){
-            //interfaceManager.appendMessageToElementId("> Mensagem '" + message + "' não foi enviada");
-        });
+                // bluetoothSerial.write - On Failure
+            },
+            function () {
+                //interfaceManager.appendMessageToElementId("> Mensagem '" + message + "' não foi enviada");
+            }
+        );
     },
 
     interval: '',
     /* 
         Envia ou para de enviar requisições para o dispositivo OBD
     */
-    sendRequests: function(){
+    sendRequests: function () {
         app.requestManager(true);
     },
 
-    stopSendingRequests: function(){
-        if(app.interval.length != 0){
+    stopSendingRequests: function () {
+        if (app.interval.length != 0) {
             clearInterval(app.interval);
             interfaceManager.appendMessageToElementId("> Parando de enviar requisições...", "cmdLog");
             JSONTemplate = cleanJSON;
@@ -283,11 +289,11 @@ var app = {
         }
     },
 
-    sleep: function(ms) {
+    sleep: function (ms) {
         return new Promise(resolve => setTimeout(resolve, ms));
     },
-      
-    sendOBDMessages: async function() {
+
+    sendOBDMessages: async function () {
         app.writeMessage("0104");
         await app.sleep(250);
         app.writeMessage("0105");
@@ -328,19 +334,19 @@ var app = {
         //6500ms
     },
 
-    requestManager: function(sendRequest){
-        var success = function(){
-            if(sendRequest){
+    requestManager: function (sendRequest) {
+        var success = function () {
+            if (sendRequest) {
                 interfaceManager.appendMessageToElementId("> Começando a enviar requisições...", "cmdLog");
-                
+
                 app.interval = setInterval(
-                    function() {
+                    function () {
                         app.sendOBDMessages();
                     }, 10000);
             }
         }
-        
-        var failure = function(){
+
+        var failure = function () {
             interfaceManager.appendMessageToElementId("> Você não está conectado a um dispositivo", "cmdLog");
         }
 

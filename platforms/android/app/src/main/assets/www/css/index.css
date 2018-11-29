@@ -129,6 +129,26 @@ nav{
     display:none;
 }
 
+#troubleCodesSection{
+    position:fixed;
+    left:0px;
+    right:0px;
+    bottom:35px;
+    top:60px;
+    display:none;
+    border:0px;
+}
+
+#obdLogSection{
+    position:fixed;
+    left:0px;
+    right:0px;
+    bottom:35px;
+    top:60px;
+    display:none;
+    border:0px;
+}
+
 /*#efefef*/
 body {
     -webkit-touch-callout: none;                /* prevent callout to copy image, etc when tap to hold */
@@ -208,6 +228,20 @@ footer{
 }
 
 #map {
+    position:relative;
+    height: 100%;
+    width: 100%;
+}
+
+#troublecodes{
+    border:0px;
+    position:relative;
+    height: 100%;
+    width: 100%;
+}
+
+#obdLog{
+    border:0px;
     position:relative;
     height: 100%;
     width: 100%;

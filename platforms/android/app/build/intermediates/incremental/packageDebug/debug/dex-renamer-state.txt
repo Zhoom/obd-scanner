@@ -1,4 +1,4 @@
-#Sun Nov 25 09:28:41 BRST 2018
+#Wed Nov 28 11:35:10 BRST 2018
 base.0=C\:\\Users\\NINJA\\Desktop\\OBD Scanner\\platforms\\android\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\0
 path.0=classes.dex
 renamed.0=classes.dex

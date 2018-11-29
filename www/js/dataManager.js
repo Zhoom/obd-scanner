@@ -1,6 +1,6 @@
 var dataManager = {
-    transformOBDdata: function(string){
-        if(string.charAt(0) == ">"){
+    transformOBDdata: function (string) {
+        if (string.charAt(0) == ">") {
             string = string.substring(1);
         }
 

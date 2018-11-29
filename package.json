@@ -24,7 +24,8 @@
             "cordova-plugin-statusbar": {},
             "cordova-plugin-advanced-http": {},
             "cordova-plugin-bluetooth-serial": {},
-            "cordova-plugin-geolocation": {}
+            "cordova-plugin-geolocation": {},
+            "cordova-plugin-file": {}
         },
         "platforms": [
             "android"
